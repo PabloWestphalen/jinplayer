@@ -30,7 +30,8 @@
 ; --------------------------------
 
 Unicode true
-SetCompressor /SOLID lzma
+SetCompress off
+;SetCompressor /SOLID zlib
 
 Name "${productName}"
 Icon "${setupIcon}"
