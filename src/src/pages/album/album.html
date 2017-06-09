@@ -1,0 +1,7 @@
+<ion-content padding>
+  <h1>{{album}}</h1>
+
+  <ion-list>
+  	<button ion-item *ngFor="let song of songs" (click)="playSong(song)">{{song.track.no}} - {{song.title}}</button>
+  </ion-list>
+</ion-content>

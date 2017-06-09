@@ -3,37 +3,37 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
-import { AboutPage } from '../pages/about/about';
-import { ContactPage } from '../pages/contact/contact';
-import { HomePage } from '../pages/home/home';
-import { TabsPage } from '../pages/tabs/tabs';
+import { ArtistsPage } from '../pages/artists/artists';
+import { AlbumPage } from '../pages/album/album';
+
+import { Library } from '../library/library';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { IonicAudioModule } from 'ionic-audio';
+
 
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,
-    ContactPage,
-    HomePage,
-    TabsPage
+    AlbumPage,
+    ArtistsPage,
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    IonicAudioModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
-    ContactPage,
-    HomePage,
-    TabsPage
+    AlbumPage,
+    ArtistsPage,
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    Library,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

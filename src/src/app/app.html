@@ -1,1 +1,34 @@
-<ion-nav [root]="rootPage"></ion-nav>
+<!--<ion-header>
+  <ion-navbar>
+    <ion-title>Jin Player</ion-title>
+  </ion-navbar>
+</ion-header>-->
+<ion-content class="no-scroll">
+	<ion-split-pane>
+
+		<ion-menu [content]="content" type="push">
+			<ion-content>
+				<ion-list>
+		            <div *ngFor="let artist of artists">
+		            	<button ion-item (click)="showArtistAlbums(artist.name)">{{artist.name}}</button>
+			            <!--<ion-list class="submenu" [class.visible]="checkActiveArtist(artist.name)">
+				            <ion-item>
+			                    <button ion-item *ngFor="let album of albums[artist.name]" (click)="openAlbum(artist.name, album)">{{album}}</button>
+				            </ion-item>
+			            </ion-list>-->
+		            </div>
+		        </ion-list>
+			</ion-content>
+		</ion-menu>
+
+		<ion-nav #content [root]="rootPage" main></ion-nav>
+	</ion-split-pane>
+	<ion-footer>
+		<ion-toolbar>
+			<div *ngIf="currentSong">
+				<ion-icon name="play"></ion-icon>
+				{{currentSong.title}}
+			</div>
+		</ion-toolbar>
+	</ion-footer>
+</ion-content>

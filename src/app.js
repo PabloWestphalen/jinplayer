@@ -2,11 +2,13 @@
   'use strict'
 
   const electron = require('electron')
+  const dialog = electron.dialog
   const app = electron.app
   const BrowserWindow = electron.BrowserWindow
   const client = require('electron-connect').client
 
   const express = require('express')
+  const fs = require('fs')
   const path = require('path')
   const logger = require('morgan')
   const cookieParser = require('cookie-parser')
@@ -17,6 +19,21 @@
   const http = require('http')
   const port = process.env.PORT || '3000'
   let server
+
+  const openDirectory = function () {
+    var directory = dialog.showOpenDialog(mainWindow, {
+      properties: ['openDirectory']
+    });
+
+    if (!directory) { return; }
+
+    console.log(directory);
+    mainWindow.webContents.send('print-directory', directory[0]);
+  };
+
+  exports.openDirectory = openDirectory;
+  exports.coverDir = path.join(__dirname, 'www', 'assets', 'cover-imgs');
+  exports.userData = app.getPath('userData');
 
   function onListening () {
     let addr = server.address()
@@ -43,6 +60,13 @@
   })
 
   app.on('ready', function () {
+    var directory = dialog.showOpenDialog({
+      title: 'Select your music library folder',
+      properties: ['openDirectory'],
+    });
+
+    exports.libDir = directory[0];
+
     mainWindow = new BrowserWindow({
       autoHideMenuBar: true,
       webPreferences: {
@@ -52,9 +76,15 @@
       height: 900
     })
 
+    //console.log(dialog.showOpenDialog({properties: ['openFile', 'openDirectory', 'multiSelections']}));
+    //openFile();
+    
+
     expressApp.use(skipMap())
     expressApp.use(express.static(path.join(__dirname, 'www')))
+    expressApp.use(express.static(path.join(__dirname, 'www')))
     expressApp.use(express.static(path.join(__dirname, 'node_modules')))
+    expressApp.use(express.static(app.getPath('userData')))
     expressApp.use(logger('dev'))
     expressApp.use(bodyParser.json())
     expressApp.use(bodyParser.urlencoded({ extended: false }))
@@ -63,6 +93,20 @@
     expressApp.get('/', function (req, res) {
       res.sendFile(path.join(path.join(__dirname, '/index.html')))
     })
+
+    expressApp.get('/song', function (req, res) {
+      var songPath = req.query.path;
+      
+      if(fs.existsSync(songPath)) {
+        var stat = fs.statSync(songPath);
+        res.writeHead(200, {
+              'Content-Type': 'audio/mpeg',
+              'Content-Length': stat.size
+          });
+          var readStream = fs.createReadStream(songPath);
+          readStream.pipe(res);
+      }
+    });
 
     server = http.createServer(expressApp)
     server.listen(port)

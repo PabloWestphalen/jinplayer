@@ -1,0 +1,31 @@
+<ion-content padding>
+  <div *ngFor="let artist of artists">
+    <h1>
+      {{artist}}
+    </h1>
+    <div class="albums" >
+
+    <ion-grid>
+      <ion-row>
+        <ion-col col-4 *ngFor="let album of albums[artist]">
+          <ion-card (click)="openAlbum(artist, album.name)">
+
+            <ion-card-header>
+              {{album.name}}
+            </ion-card-header>
+
+            <ion-card-content>
+              <img src="{{album.cover ? '/cover-imgs/' + album.cover : '/assets/icon/default-cover.png' }}" />
+            </ion-card-content>
+
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+
+      
+    </div>
+  </div>
+</ion-content>

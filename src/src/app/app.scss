@@ -14,3 +14,26 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+.no-scroll > .scroll-content {
+	overflow: hidden;
+}
+
+ion-list.submenu {
+    display: none;
+    margin-bottom: 0;
+
+    ion-label {
+	    margin-top: 0 !important;
+	    margin-bottom: 0 !important;
+	    margin-right: 0;
+	}
+
+	ion-item .item-inner {
+    	padding-right: 0 !important;
+	}
+}
+
+ion-list.submenu.visible {
+	display: block;
+}
