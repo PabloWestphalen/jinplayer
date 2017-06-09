@@ -1,16 +1,19 @@
 {
   "name": "polyonic",
-  "productName": "A Polyonic App",
-  "description": "A Polyonic Electron Ionic 2 starter application",
+  "productName": "Jin Player",
+  "description": "An MP3 Player made with Electron/Ionic/Angular",
   "version": "1.0.0",
-  "author": "Author",
-  "copyright": "© 2016, Author",
+  "author": "Pablo Westphalen",
+  "copyright": "© 2016, Pablo Westphalen",
   "main": "src/app.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/paulsutherland/Polyonic"
+    "url": "https://github.com/PabloWestphalen/jinplayer"
   },
   "license": "MIT",
+  "dependencies": {
+    "@types/node": "^7.0.28"
+  },
   "devDependencies": {
     "asar": "0.13.0",
     "body-parser": "1.17.2",
