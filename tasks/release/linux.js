@@ -16,10 +16,11 @@ let readyAppDir
 let manifest
 
 const init = function () {
+  gulpUtil.log('Initializing...')
   projectDir = jetpack
   tmpDir = projectDir.dir('./tmp', { empty: true })
   releasesDir = projectDir.dir('./releases')
-  manifest = projectDir.read('app/package.json', 'json')
+  manifest = projectDir.read('src/package.json', 'json')
   packName = manifest.name + '_' + manifest.version
   packDir = tmpDir.dir(packName)
   readyAppDir = packDir.cwd('opt', manifest.name)
@@ -28,6 +29,7 @@ const init = function () {
 }
 
 let copyRuntime = function () {
+  gulpUtil.log('Copying runtime...');
   return projectDir.copyAsync('node_modules/electron/dist', readyAppDir.path(), { overwrite: true })
 }
 
@@ -44,7 +46,8 @@ let packageBuiltApp = function () {
 }
 
 let finalize = function () {
-    // Create .desktop file from the template
+  gulpUtil.log('Finalizing...')
+  // Create .desktop file from the template
   let desktop = projectDir.read('resources/linux/app.desktop')
   desktop = utils.replace(desktop, {
     name: manifest.name,
@@ -62,10 +65,12 @@ let finalize = function () {
 }
 
 let renameApp = function () {
+  gulpUtil.log('Renaming app...')
   return readyAppDir.renameAsync('electron', manifest.name)
 }
 
 let packToDebFile = function () {
+  gulpUtil.log('Packing to deb file...')
   let deferred = Q.defer()
 
   let debFileName = packName + '_amd64.deb'
@@ -104,6 +109,7 @@ let packToDebFile = function () {
 }
 
 let cleanClutter = function () {
+  gulpUtil.log('Cleaning clutter...')
   return tmpDir.removeAsync('.')
 }
 

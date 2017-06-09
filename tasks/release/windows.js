@@ -17,7 +17,9 @@ let init = function () {
   projectDir = jetpack
   tmpDir = projectDir.dir('./tmp', { empty: true })
   releasesDir = projectDir.dir('./releases')
-  manifest = projectDir.read('app/package.json', 'json')
+  manifest = projectDir.read('src/package.json', 'json')
+  gulpUtil.log('projectDir is', projectDir);
+  gulpUtil.log('Got this manifest: ', manifest);
   readyAppDir = tmpDir.cwd(manifest.name)
 
   return Q()
@@ -115,6 +117,9 @@ let createInstaller = function () {
     deferred.resolve()
   })
 
+  //gulpUtil.log('Test file ready');
+  //deferred.resolve();
+
   return deferred.promise
 }
 
@@ -130,6 +135,6 @@ module.exports = function () {
         .then(finalize)
         .then(renameApp)
         .then(createInstaller)
-        .then(cleanClutter)
+        //.then(cleanClutter)
         .catch(console.error)
 }
